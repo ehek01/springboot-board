@@ -1,4 +1,4 @@
-package com.nhnacademy.myHome;
+package com.nhnacademy.myhome;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
