@@ -3,6 +3,8 @@ package com.nhnacademy.myhome.controller;
 import com.nhnacademy.myhome.entity.Board;
 import com.nhnacademy.myhome.repository.BoardRepository;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
     private final BoardRepository boardRepository;
-
-    public BoardController(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -25,5 +24,4 @@ public class BoardController {
 
         return "board/list";
     }
-    
 }
