@@ -20,13 +20,13 @@
         <tbody>
           <tr th:each="board : ${boards}">
             <td th:text="${board.id}">Mark</td>
-            <td th:text="${board.title}">Otto</td>
+            <td><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Otto</a></td>
             <td>홍길동</td>
           </tr>
         </tbody>
       </table>
       <div class="text-end">
-        <button type="button" class="btn btn-primary">쓰기</button>
+        <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
       </div>
     </div>
 
