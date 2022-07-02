@@ -6,7 +6,8 @@ import java.util.List;
 
 import com.nhnacademy.myhome.validator.BoardValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +24,8 @@ public class BoardController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Board> boards = boardRepository.findAll();
+        Page<Board> boards = boardRepository.findAll(PageRequest.of(0, 20));
         model.addAttribute("boards", boards);
-
         return "board/list";
     }
 
@@ -46,6 +46,7 @@ public class BoardController {
         if (bindingResult.hasErrors()) { // TODO 6 : custom validator 는 동작을 하는데, entity 에 해둔 validation 은 적용이 안된다 왜일까..
             return "board/form";
         }
+
         boardRepository.save(board);
         return "redirect:/board/list";
     }

@@ -23,7 +23,7 @@
           <textarea class="form-control" id="content" rows="3" th:field="*{content}"
             th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"></textarea>
           <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
-            제목 에러 메세지
+            내용 에러 메세지
           </div>
         </div>
         <div class="text-end">
