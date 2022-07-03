@@ -1,6 +1,5 @@
 package com.nhnacademy.myhome.validator;
 
-
 import com.nhnacademy.myhome.entity.Board;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

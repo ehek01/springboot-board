@@ -9,6 +9,17 @@
     <div class="container">
       <h2 class="mt-5">게시판</h2>
       <div>총 건수 : <span th:text="${boards.totalElements}"></span></div>
+
+      <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/board/list}">
+        <div class="col-auto">
+          <label for="searchText" class="visually-hidden">검색</label>
+          <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-light mb-3">검색</button>
+        </div>
+      </form>
+
       <table class="table table-striped">
         <thead>
           <tr>
@@ -25,19 +36,21 @@
           </tr>
         </tbody>
       </table>
+
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link">Previous</a>
+          <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" th:href="@{/board/list(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}">Previous</a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+          <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'" th:each="i: ${#numbers.sequence(startPage, endPage)} ">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}">1</a>
+          </li>
+          <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
           </li>
         </ul>
       </nav>
+
       <div class="text-end">
         <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
       </div>
