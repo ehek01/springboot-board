@@ -10,4 +10,5 @@ public class MyHomeApplication {
 		SpringApplication.run(MyHomeApplication.class, args);
 	}
 
+
 }
