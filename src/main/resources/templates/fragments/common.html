@@ -41,9 +41,12 @@
                 </ul>
               </li> -->
             </ul>
-            <!-- <form role="search">
-              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            </form> -->
+              <a class="btn btn-outline-primary me-2" th:href="@{/account/login}">Login</a>
+              <form class="d-flex" role="search">
+                  <span class="text-white">사용자</span>
+                  <span class="text-white mx-2">권한</span>
+                  <button type="button" class="btn btn-warning">Logout</button>
+              </form>
           </div>
         </div>
       </nav>

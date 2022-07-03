@@ -40,21 +40,21 @@ public class WebSecurityConfig {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery(                              // authentication(인증처리)
-                        "select username, password, enabled " +
-                        "from User " +
-                        "where username = ?")
+                        "select user_name, password, enabled " +
+                        "from user " +
+                        "where user_name = ?")
                 .authoritiesByUsernameQuery(                        // authority(권한처리)
-                        "select username, name " +
-                        "from UserRole ur inner join User u on ur.user_id = u_id " +
-                        "inner join Role r on ur.role_id = r.id " +
-                        "where ");
+                        "select u.user_name, r.role_name " +
+                        "from user_role ur inner join user u on ur.user_id = u.user_id " +
+                        "inner join role r on ur.role_id = r.role_id " +
+                        "where u.user_name = ?");
 
         AuthenticationManager authenticationManager
                 = authenticationManagerBuilder.build();
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/css/**").permitAll()           // 매쳐스 = url 정의 -> 요런 url 은 로그인 없이도 누구나 접근할 수 있다.
+                .antMatchers("/", "/account/register" ,"/css/**").permitAll() // 매쳐스 = url 정의 -> 요런 url 은 로그인 없이도 누구나 접근할 수 있다.
                 .anyRequest().authenticated()                       // 그밖에(anyRequest) 모든 요청은 반드시 로그인을해야만(authenticated) 접근할 수 있다.
 
                 .and()
