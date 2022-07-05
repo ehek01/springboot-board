@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:fragment="head(title)">
         <!-- Custom styles for this template -->
         <link href="../../static/css/navbar.css" rel="stylesheet">
@@ -41,11 +41,15 @@
                 </ul>
               </li> -->
             </ul>
-              <a class="btn btn-outline-primary me-2" th:href="@{/account/login}">Login</a>
-              <form class="d-flex" role="search">
-                  <span class="text-white">사용자</span>
-                  <span class="text-white mx-2">권한</span>
-                  <button type="button" class="btn btn-warning">Logout</button>
+
+              <a class="btn btn-outline-primary me-2" th:href="@{/account/login}"
+                 sec:authorize="!isAuthenticated()">로그인</a>
+              <a class="btn btn-outline-primary me-2" th:href="@{/account/register}"
+                 sec:authorize="!isAuthenticated()">회원가입</a>
+              <form class="d-flex" role="search" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                  <span class="text-white" sec:authentication="name">사용자</span>
+                  <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+                  <button type="submit" class="btn btn-warning">Logout</button>
               </form>
           </div>
         </div>
