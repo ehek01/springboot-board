@@ -28,11 +28,13 @@ public class MyHomeApplication {
 			userService.createRole("ROLE_ADMIN");
 
 			// user init
-			userService.createUser(new User(null, "user", "1", false, new ArrayList<>(), new ArrayList<>()));
-			userService.createUser(new User(null, "gildong", "1", false, new ArrayList<>(), new ArrayList<>()));
+			User user = new User(null, "user", "1", false, new ArrayList<>(), new ArrayList<>());
+			User gildong = new User(null, "gildong", "1", false, new ArrayList<>(), new ArrayList<>());
+			userService.createUser(user);
+			userService.createUser(gildong);
 
 			// board init
-//			boardRepository.save(new Board(null, "초기제목1", "초기내용1", user1));
+			boardRepository.save(new Board(null, "초기제목1", "초기내용1", user));
 		};
 	}
 }
