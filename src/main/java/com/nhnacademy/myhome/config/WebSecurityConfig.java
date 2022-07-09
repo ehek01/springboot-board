@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                         "where user_name = ?")
                 .authoritiesByUsernameQuery(                        // authority(권한처리)
                         "select u.user_name, r.role_name " +
-                        "from user_role ur inner join user u on ur.user_id = u.user_id " +
+                        "from user_role ur inner join user u on ur.user_id = u.id " +
                         "inner join role r on ur.role_id = r.role_id " +
                         "where u.user_name = ?");
 
@@ -53,8 +53,10 @@ public class WebSecurityConfig {
                 = authenticationManagerBuilder.build();
 
         http
+                .csrf().disable()
+
                 .authorizeRequests()
-                .antMatchers("/", "/account/register" ,"/css/**").permitAll() // 매쳐스 = url 정의 -> 요런 url 은 로그인 없이도 누구나 접근할 수 있다.
+                .antMatchers("/", "/account/register" ,"/css/**", "/api/**").permitAll() // 매쳐스 = url 정의 -> 요런 url 은 로그인 없이도 누구나 접근할 수 있다.
                 .anyRequest().authenticated()                       // 그밖에(anyRequest) 모든 요청은 반드시 로그인을해야만(authenticated) 접근할 수 있다.
 
                 .and()

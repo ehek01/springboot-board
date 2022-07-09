@@ -1,5 +1,6 @@
 package com.nhnacademy.myhome.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -21,5 +22,6 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnore // role 을 가지고 있는 사용자들은 표시가 되지 않을거다 == stack overflow 안뜸.
     private List<User> users;
 }

@@ -4,12 +4,14 @@ import com.nhnacademy.myhome.entity.Board;
 import com.nhnacademy.myhome.repository.BoardRepository;
 import java.util.List;
 
+import com.nhnacademy.myhome.service.BoardService;
 import com.nhnacademy.myhome.validator.BoardValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 public class BoardController {
     private final BoardRepository boardRepository;
     private final BoardValidator boardValidator;
+    private final BoardService boardService;
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 2) Pageable pageable,
@@ -55,13 +58,13 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String greetingSubmit(@Valid Board board, BindingResult bindingResult) {
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
         boardValidator.validate(board, bindingResult);
-        if (bindingResult.hasErrors()) { // TODO 6 : custom validator 는 동작을 하는데, entity 에 해둔 validation 은 적용이 안된다 왜일까..
+        if (bindingResult.hasErrors()) {
             return "board/form";
         }
-
-        boardRepository.save(board);
+        String username = authentication.getName();
+        boardService.save(username, board);
         return "redirect:/board/list";
     }
 }

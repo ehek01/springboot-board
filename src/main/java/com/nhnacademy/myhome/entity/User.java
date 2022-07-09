@@ -1,9 +1,7 @@
 package com.nhnacademy.myhome.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.data.jpa.repository.EntityGraph;
 
 import javax.persistence.*;
@@ -13,11 +11,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private Long userId;
 
     @Column(name = "user_name", unique = true)
@@ -34,4 +33,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles = new ArrayList<>();
+
+    // mappedBy 는 ref entity 의 변수명.
+    @OneToMany(mappedBy = "user") // 사용자 입장에서 게시글을 가져올땐 일대다 관계이다.
+    private List<Board> boards = new ArrayList<>();
 }
